@@ -72,7 +72,7 @@ class DynamoDB(object):
             if exc.response['Error']['Code'] in RETRY_EXCEPTIONS:
                 log.warning("Throttled while trying to read lock table in Dynamo: %s", exc)
                 time.sleep(1)
-                return self.lock_shard(shard_id)
+                return self.lock_shard(shard_id, 10)
 
             # all other client errors just get re-raised
             raise
