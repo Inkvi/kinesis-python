@@ -49,7 +49,7 @@ class DynamoDB(object):
             )
         except ClientError as exc:
             if exc.response['Error']['Code'] in RETRY_EXCEPTIONS:
-                log.warn("Throttled while trying to read lock table in Dynamo: %s", exc)
+                log.warning("Throttled while trying to read lock table in Dynamo: %s", exc)
                 time.sleep(1)
 
             # for all other exceptions (including condition check failures) we just re-raise
@@ -70,7 +70,7 @@ class DynamoDB(object):
             pass
         except ClientError as exc:
             if exc.response['Error']['Code'] in RETRY_EXCEPTIONS:
-                log.warn("Throttled while trying to read lock table in Dynamo: %s", exc)
+                log.warning("Throttled while trying to read lock table in Dynamo: %s", exc)
                 time.sleep(1)
                 return self.lock_shard(shard_id)
 
@@ -122,7 +122,7 @@ class DynamoDB(object):
                 return False
 
             if exc.response['Error']['Code'] in RETRY_EXCEPTIONS:
-                log.warn("Throttled while trying to write lock table in Dynamo: %s", exc)
+                log.warning("Throttled while trying to write lock table in Dynamo: %s", exc)
                 time.sleep(1)
                 return self.should_start_shard_reader(shard_id)
 
