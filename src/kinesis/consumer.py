@@ -56,7 +56,7 @@ class ShardReader(SubprocessLoop):
                 log.error("Client error occurred while reading: %s", exc)
                 loop_status = False
         else:
-            if not resp['NextShardIterator']:
+            if not resp.get('NextShardIterator'):
                 # the shard has been closed
                 log.info("Our shard has been closed, exiting")
                 return False
